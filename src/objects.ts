@@ -137,7 +137,9 @@ export function duplicateQuestion(id: number, oldQuestion: Question): Question {
  * Check out the subsection about "Nested Fields" for more information.
  */
 export function addOption(question: Question, newOption: string): Question {
-    return question;
+    const newOpts: string[] = [...question.options, newOption];
+    const newQuestion: Question = { ...question, options: newOpts };
+    return newQuestion;
 }
 
 /**
@@ -154,5 +156,13 @@ export function mergeQuestion(
     contentQuestion: Question,
     { points }: { points: number },
 ): Question {
-    return contentQuestion;
+    const newQuestion: Question = {
+        ...contentQuestion,
+        points: points,
+        id: id,
+        name: name,
+        published: false,
+    };
+
+    return newQuestion;
 }
