@@ -41,7 +41,16 @@ export function isCorrect(question: Question, answer: string): boolean {
  * be exactly one of the options.
  */
 export function isValid(question: Question, answer: string): boolean {
-    return false;
+    if (question.type === "short_answer_question") {
+        return true;
+    } else {
+        const { options: choices } = question;
+        if (choices.includes(answer)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 /**
@@ -51,7 +60,8 @@ export function isValid(question: Question, answer: string): boolean {
  * name "My First Question" would become "9: My First Q".
  */
 export function toShortForm(question: Question): string {
-    return "";
+    let short: string = question.id + ": " + question.name.slice(0, 10);
+    return short;
 }
 
 /**
@@ -72,7 +82,12 @@ export function toShortForm(question: Question): string {
  * Check the unit tests for more examples of what this looks like!
  */
 export function toMarkdown(question: Question): string {
-    return "";
+    let markDown: string = "# " + question.name + "\n" + question.body;
+    if (question.type === "multiple_choice_question") {
+        let choiceStr: string = question.options.join("\n- ");
+        markDown = markDown + "\n- " + choiceStr;
+    }
+    return markDown;
 }
 
 /**
